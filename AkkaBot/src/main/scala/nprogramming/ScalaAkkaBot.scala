@@ -11,7 +11,7 @@ class ScalaAkkaBot extends Actor {
     case Move(newDirection) =>
       moving = true
       direction = newDirection
-      println(s"I am now moving $direction")
+      println(self.path + "is now moving " + direction)
     case Stop =>
       moving = false
       println("I stopped moving")
