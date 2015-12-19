@@ -2,7 +2,7 @@ val symbols = List("AMD", "AAPL", "AMZN", "IBM", "ORCL", "MSFT")
 val year = 2014
 
 val (topStock, topPrice) =
-  symbols.map { ticker => (ticker, getYearEndClosingPrice(ticker, year)) }
+  symbols.par.map { ticker => (ticker, getYearEndClosingPrice(ticker, year)) }
     .maxBy { stockPrice => stockPrice._2 }
 
 printf(s"Top stock of $year is $topStock closing at price $$$topPrice")
