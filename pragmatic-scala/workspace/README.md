@@ -5,3 +5,4 @@ Running examples:
 * scala src/FindMaxImperative.scala
 * scala src/FindMaxFunctional.scala
 * scala src/ImplicitParameters.scala
+* scala src/Complex.scala
