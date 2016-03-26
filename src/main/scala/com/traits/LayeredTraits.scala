@@ -10,7 +10,7 @@ trait ConsoleLogger extends Logger {
 
 trait TimestampLogger extends Logger {
   override def log(message: String): Unit = {
-    super.log(new java.util.Date() + " " + message)
+    super.log(s"${new java.util.Date()} $message")
   }
 }
 
@@ -22,7 +22,7 @@ trait ShortLogger extends Logger {
       if (message.length <= maxLength)
         message
       else
-        message.substring(0, maxLength - 3) + "..."
+        s"${message.substring(0, maxLength - 3)}..."
     )
   }
 }
@@ -39,7 +39,7 @@ class SavingAccount extends Logger {
     if (amount > balance)
       log("Insufficient funds")
     else {
-      log("Withdrew " + amount + "$.")
+      log(s"Withdrew $amount$$.")
       balance -= amount
       balance
     }
