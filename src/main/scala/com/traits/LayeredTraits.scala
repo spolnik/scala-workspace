@@ -2,6 +2,9 @@ package com.traits
 
 trait Logger {
   def log(message: String) { }
+  def info(message: String) { log(s"INFO: $message")}
+  def warn(message: String) { log(s"WARN: $message")}
+  def severe(message: String) { log(s"SEVERE: $message")}
 }
 
 trait ConsoleLogger extends Logger {
@@ -15,7 +18,7 @@ trait TimestampLogger extends Logger {
 }
 
 trait ShortLogger extends Logger {
-  val maxLength = 15
+  val maxLength = 20
 
   override def log(message: String): Unit = {
     super.log(
@@ -27,8 +30,11 @@ trait ShortLogger extends Logger {
   }
 }
 
-class SavingAccount extends Logger {
+class Account {
   var balance = 0.0
+}
+
+class SavingAccount extends Account with Logger {
 
   def credit(amount: Double) = {
     balance += amount
@@ -37,9 +43,9 @@ class SavingAccount extends Logger {
 
   def withdraw(amount: Double) = {
     if (amount > balance)
-      log("Insufficient funds")
+      warn("Insufficient funds")
     else {
-      log(s"Withdrew $amount$$.")
+      info(s"Withdrew $amount$$.")
       balance -= amount
       balance
     }
@@ -47,23 +53,15 @@ class SavingAccount extends Logger {
 }
 
 object SavingAccountWithLogger extends App {
-  val account = new SavingAccount
-  println(account.withdraw(3.3))
-  println(account.credit(4.4))
-  println(account.withdraw(3.3))
 
-  val accountWithConsoleLogger = new SavingAccount with ConsoleLogger
-  println(accountWithConsoleLogger.withdraw(3.3))
-  println(accountWithConsoleLogger.credit(4.4))
-  println(accountWithConsoleLogger.withdraw(3.3))
+  def processAccount(account: SavingAccount) = {
+    account.withdraw(3.3)
+    println(account.credit(4.4))
+    println(account.withdraw(3.3))
+  }
 
-  val accountWithConsoleLoggerWithTimestampLoggerWithShortLogger = new SavingAccount with ConsoleLogger with TimestampLogger with ShortLogger
-  println(accountWithConsoleLoggerWithTimestampLoggerWithShortLogger.withdraw(3.3))
-  println(accountWithConsoleLoggerWithTimestampLoggerWithShortLogger.credit(4.4))
-  println(accountWithConsoleLoggerWithTimestampLoggerWithShortLogger.withdraw(3.3))
-
-  val accountWithConsoleLoggerWithShortLoggerWithTimestampLogger = new SavingAccount with ConsoleLogger with ShortLogger with TimestampLogger
-  println(accountWithConsoleLoggerWithShortLoggerWithTimestampLogger.withdraw(3.3))
-  println(accountWithConsoleLoggerWithShortLoggerWithTimestampLogger.credit(4.4))
-  println(accountWithConsoleLoggerWithShortLoggerWithTimestampLogger.withdraw(3.3))
+  processAccount(new SavingAccount)
+  processAccount(new SavingAccount with ConsoleLogger)
+  processAccount(new SavingAccount with ConsoleLogger with TimestampLogger with ShortLogger)
+  processAccount(new SavingAccount with ConsoleLogger with ShortLogger with TimestampLogger)
 }
