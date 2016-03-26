@@ -51,25 +51,19 @@ object SavingAccountWithLogger extends App {
   println(account.withdraw(3.3))
   println(account.credit(4.4))
   println(account.withdraw(3.3))
-}
 
-object SavingAccountWithConsoleLogger extends App {
-  val account = new SavingAccount with ConsoleLogger
-  println(account.withdraw(3.3))
-  println(account.credit(4.4))
-  println(account.withdraw(3.3))
-}
+  val accountWithConsoleLogger = new SavingAccount with ConsoleLogger
+  println(accountWithConsoleLogger.withdraw(3.3))
+  println(accountWithConsoleLogger.credit(4.4))
+  println(accountWithConsoleLogger.withdraw(3.3))
 
-object SavingAccountWithConsoleLoggerWithTimestampLoggerWithShortLogger extends App {
-  val account = new SavingAccount with ConsoleLogger with TimestampLogger with ShortLogger
-  println(account.withdraw(3.3))
-  println(account.credit(4.4))
-  println(account.withdraw(3.3))
-}
+  val accountWithConsoleLoggerWithTimestampLoggerWithShortLogger = new SavingAccount with ConsoleLogger with TimestampLogger with ShortLogger
+  println(accountWithConsoleLoggerWithTimestampLoggerWithShortLogger.withdraw(3.3))
+  println(accountWithConsoleLoggerWithTimestampLoggerWithShortLogger.credit(4.4))
+  println(accountWithConsoleLoggerWithTimestampLoggerWithShortLogger.withdraw(3.3))
 
-object SavingAccountWithConsoleLoggerWithShortLoggerWithTimestampLogger extends App {
-  val account = new SavingAccount with ConsoleLogger with ShortLogger with TimestampLogger
-  println(account.withdraw(3.3))
-  println(account.credit(4.4))
-  println(account.withdraw(3.3))
+  val accountWithConsoleLoggerWithShortLoggerWithTimestampLogger = new SavingAccount with ConsoleLogger with ShortLogger with TimestampLogger
+  println(accountWithConsoleLoggerWithShortLoggerWithTimestampLogger.withdraw(3.3))
+  println(accountWithConsoleLoggerWithShortLoggerWithTimestampLogger.credit(4.4))
+  println(accountWithConsoleLoggerWithShortLoggerWithTimestampLogger.withdraw(3.3))
 }
