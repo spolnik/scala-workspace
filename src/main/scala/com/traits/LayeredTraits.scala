@@ -1,5 +1,8 @@
 package com.traits
 
+import java.io.PrintWriter
+import java.util.Date
+
 trait Logger {
   def log(message: String) { }
   def info(message: String) { log(s"INFO: $message")}
@@ -28,6 +31,14 @@ trait ShortLogger extends Logger {
         s"${message.substring(0, maxLength - 3)}..."
     )
   }
+}
+
+trait FileLogger extends Logger {
+  val filename: String
+  val out = new PrintWriter(filename)
+  out.println(s"# ${new Date().toString}")
+
+  override def log(message: String): Unit = { out.println(message); out.flush() }
 }
 
 class Account {
@@ -64,4 +75,5 @@ object SavingAccountWithLogger extends App {
   processAccount(new SavingAccount with ConsoleLogger)
   processAccount(new SavingAccount with ConsoleLogger with TimestampLogger with ShortLogger)
   processAccount(new SavingAccount with ConsoleLogger with ShortLogger with TimestampLogger)
+  processAccount(new { val filename = "app.log"} with SavingAccount with FileLogger with TimestampLogger)
 }
